@@ -187,7 +187,16 @@ VectorXf QuadEstimatorEKF::PredictState(VectorXf curState, float dt, V3F accel, 
 
   ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
 
-
+    V3F v_acceleration =   attitude.Rotate_BtoI(accel) - V3F(0,0,9.81f);
+    
+    predictedState(0) = predictedState(0) + dt*predictedState(3);
+    predictedState(1) = predictedState(1) + dt*predictedState(4);
+    predictedState(2) = predictedState(2) + dt*predictedState(5);
+    
+    predictedState(3) = predictedState(3) + dt*v_acceleration.x;
+    predictedState(4) = predictedState(4) + dt*v_acceleration.y;
+    predictedState(5) = predictedState(5) + dt*v_acceleration.z;
+    
   /////////////////////////////// END STUDENT CODE ////////////////////////////
 
   return predictedState;
@@ -213,8 +222,16 @@ MatrixXf QuadEstimatorEKF::GetRbgPrime(float roll, float pitch, float yaw)
   //   that your calculations are reasonable
 
   ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
-
-
+    float phi = roll;
+    float theta = pitch;
+    float psi = yaw;
+    RbgPrime(0,0) =  -cos(theta)*sin(psi);
+    RbgPrime(0,1) = -sin(phi)*sin(theta)*sin(psi) - cos(phi)*cos(psi);
+    RbgPrime(0,2) = -cos(phi)*sin(theta)*sin(psi) + sin(phi)*cos(psi);
+    RbgPrime(1,0) = cos(theta)*cos(psi);
+    RbgPrime(1,1) = sin(phi)*sin(theta)*cos(psi) - cos(phi)*sin(psi);
+    RbgPrime(1,2) = cos(phi)*sin(theta)*cos(psi) + sin(phi)*sin(psi);
+    
   /////////////////////////////// END STUDENT CODE ////////////////////////////
 
   return RbgPrime;
@@ -260,7 +277,19 @@ void QuadEstimatorEKF::Predict(float dt, V3F accel, V3F gyro)
 
   ////////////////////////////// BEGIN STUDENT CODE ///////////////////////////
 
-
+    
+    gPrime(0,3) = dt;
+    gPrime(1,4) = dt;
+    gPrime(2,5) = dt;
+    gPrime(3,6) = dt*(RbgPrime(0,0)*accel.x + RbgPrime(0,1)*accel.y + RbgPrime(0,2)*accel.z );
+    gPrime(4,6) = dt*(RbgPrime(1,0)*accel.x + RbgPrime(1,1)*accel.y + RbgPrime(1,2)*accel.z );   
+    gPrime(5,6) = dt*(RbgPrime(2,0)*accel.x + RbgPrime(2,1)*accel.y + RbgPrime(2,2)*accel.z);
+    
+    MatrixXf gPrimeT = gPrime;
+    gPrimeT.transposeInPlace();
+    ekfCov = ((gPrime*ekfCov)*(gPrimeT)) + Q;
+    
+    
   /////////////////////////////// END STUDENT CODE ////////////////////////////
 
   ekfState = newState;
