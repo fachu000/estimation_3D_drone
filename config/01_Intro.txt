@@ -4,7 +4,7 @@ INCLUDE QuadPhysicalParams.txt
 
 # simulation setup
 Sim.RunMode = Repeat
-Sim.EndTime = 1
+Sim.EndTime = 25
 Sim.Vehicle1 = Quad
 
 # Controller selection
@@ -12,7 +12,8 @@ Quad.ControlType = QuadControl
 Quad.ControlConfig = QuadControlParams
 
 # reference trajectory (just the starting position)
-QuadControlParams.Trajectory=0,0,-1
+#QuadControlParams.Trajectory=0,0,-1
+QuadControlParams.Trajectory=traj/Square.txt
 
 # initial conditions
 Quad.InitialPos=0,0,-1
@@ -29,10 +30,10 @@ INCLUDE Simulation.txt
 
 # make sure the controller is off
 [QuadControlParams]
-kpPosXY = 0
-kpPosZ = 0
-kpVelXY = 0
-kpVelZ = 0
-kpBank = 0
-kpYaw = 0
-kpPQR = 0,0,0
+#kpPosXY = 0
+#kpPosZ = 0
+#kpVelXY = 0
+#kpVelZ = 0
+#kpBank = 0
+#kpYaw = 0
+#kpPQR = 0,0,0

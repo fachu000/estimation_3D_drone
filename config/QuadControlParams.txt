@@ -41,7 +41,7 @@ kpYaw = 2.2
 
 # Angle rate gains
 # kpPQR = 23, 23, 5
-kpPQR = 87, 87, 15
+kpPQR = 57, 57, 8
 
 # limits
 maxAscentRate = 5
