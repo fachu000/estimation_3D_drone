@@ -15,6 +15,9 @@ approximately capture 68% of the respective measurements.
 
 ![sensor noise](writeup_figs/step1.png)
 
+The standard deviation can be obtained as the square root of the
+sample variance of the entries of the second column in the data files. 
+
 ### Step 2: Attitude Estimation ###
 
 
