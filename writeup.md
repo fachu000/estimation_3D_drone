@@ -44,7 +44,7 @@ The prediction step has been implemented successfully. As shown in the
 figure, the estimator state tracks the actual state with only
 reasonably slow drift.
  
- ![attitude](writeup_figs/step3a.png)
+![prediction](writeup_figs/step3a.png)
 
 
 Next, the partial derivative of the body-to-global rotation matrix was
@@ -52,7 +52,7 @@ implemented, as well as the rest of the prediction step. The parameters
  `QPosXYStd` and `QVelXYStd` where tuned to capture the magnitude of
  the error, as shown next.
  
-  ![attitude](writeup_figs/step3b.png)
+  ![prediction2](writeup_figs/step3b.png)
  
 
 ### Step 4: Magnetometer Update ###
@@ -65,7 +65,7 @@ The magnetometer update has been successfully implemented in
 `UpdateFromMag()`. The tests are passed as shown next:
 
 
-  ![attitude](writeup_figs/step4.png)
+  ![magnetormeter](writeup_figs/step4.png)
 
 
 
